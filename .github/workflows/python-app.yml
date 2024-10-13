@@ -32,7 +32,7 @@ jobs:
     - name: Run the application
       run: |
         make run &                 # Run the app in the background
-        sleep 30                   # Wait for the server to start
+        sleep 60                   # Wait for the server to start
 
     - name: Check if the server is running
       run: curl http://localhost:3000  # Basic test to verify the server is up
