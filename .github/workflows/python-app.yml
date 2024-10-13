@@ -32,8 +32,11 @@ jobs:
 
     - name: Run the application
       run: |
-        make run &                 # Run the app in the background
-        sleep 10                   # Wait for the server to start
+        make run > server_log.txt 2>&1 &   # Redirect server output to a log file
+        sleep 30
+    - name: Print server log
+      run: cat server_log.txt              # Print the server log to debug any issues
+
 
     - name: Check if the server is running
       run: curl http://localhost:3000  # Basic test to verify the server is up
