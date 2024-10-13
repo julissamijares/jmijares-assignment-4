@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .result { margin-bottom: 20px; }
-        .similarity-score { font-weight: bold; color: #007BFF; }
-        .document { background-color: #f9f9f9; padding: 10px; border-radius: 5px; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Search Results for "{{ query }}"</h1>
-
-    <div class="results">
-        {% for doc, score in results %}
-            <div class="result">
-                <p class="similarity-score">Similarity: {{ score }}</p>
-                <div class="document">{{ doc }}</div>
+    <div class="container">
+        <h1>Search Results for: "{{ query }}"</h1>
+        
+        <div class="results">
+            {% for doc, score in results %}
+            <div class="result-box">
+                <div class="result-header">
+                    <strong>Document {{ top_doc_indices[loop.index0] }} - Similarity: {{ score|round(3) }}</strong>
+                </div>
+                <div class="result-content">
+                    {{ doc }}
+                </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="chart-container">
+            <h2>Cosine Similarity Chart</h2>
+            {{ plot_html|safe }}  <!-- This will render the Plotly chart -->        
+        </div>
+        <a href="/"> <button class="back-button">Back to Search</button></a>
     </div>
-
-    <h2>Cosine Similarity Chart</h2>
-    <img src="data:image/png;base64,{{ plot_url }}" alt="Cosine Similarity Bar Chart">
-
 </body>
 </html>
