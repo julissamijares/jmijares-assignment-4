@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .result { margin-bottom: 20px; }
+        .similarity-score { font-weight: bold; color: #007BFF; }
+        .document { background-color: #f9f9f9; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Search Results for "{{ query }}"</h1>
+
+    <div class="results">
+        {% for doc, score in results %}
+            <div class="result">
+                <p class="similarity-score">Similarity: {{ score }}</p>
+                <div class="document">{{ doc }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Cosine Similarity Chart</h2>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Cosine Similarity Bar Chart">
+
+</body>
+</html>
