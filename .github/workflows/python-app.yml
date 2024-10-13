@@ -1,0 +1,39 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4  # Check out the repository code
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"  # Setting the Python version
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get install make  # Ensure 'make' is installed
+        make install               # Install dependencies using the 'Makefile'
+
+    - name: Run the application
+      run: |
+        make run &                 # Run the app in the background
+        sleep 10                   # Wait for the server to start
+
+    - name: Check if the server is running
+      run: curl http://localhost:3000  # Basic test to verify the server is up
