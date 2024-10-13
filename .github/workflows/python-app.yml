@@ -1,6 +1,3 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Python application
 
 on:
@@ -9,12 +6,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +16,7 @@ jobs:
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"  # Setting the Python version
+        python-version: "3.10"
 
     - name: Install dependencies
       run: |
@@ -32,11 +25,11 @@ jobs:
 
     - name: Run the application
       run: |
-        make run > server_log.txt 2>&1 &   # Redirect server output to a log file
-        sleep 30
-    - name: Print server log
-      run: cat server_log.txt              # Print the server log to debug any issues
-
+        make run > server_log.txt 2>&1 &   # Run the Flask app in the background
+        sleep 10                           # Sleep to give the server time to start
 
     - name: Check if the server is running
-      run: curl http://localhost:3000  # Basic test to verify the server is up
+      run: curl http://localhost:3000       # Check if the server is accessible
+
+    - name: Print server log
+      run: cat server_log.txt               # Print the server log for debugging
